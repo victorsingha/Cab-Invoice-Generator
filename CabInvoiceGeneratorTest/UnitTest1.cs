@@ -41,6 +41,18 @@ namespace CabInvoiceGeneratorTest
             Assert.AreEqual(expected, summary.GetData());
         }
         [Test]
+        public void GivenUserIDInvoiceServiceGetsListOfRidesAndReturnInvoice()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(2.0, 5), new Ride(4.0, 5), new Ride(3.0, 7) };
+            RideRepository rideRepository = new RideRepository();
+            rideRepository.AddRide("victor",rides);
+            Ride[] victorRides = rideRepository.getRides("victor");         
+            InvoiceSummary summary = invoiceGenerator.CalculateFare(victorRides);
+            double[] expected = { 3.0, 107.0, 35.666666666666664d };
+            Assert.AreEqual(expected, summary.GetData());
+        }
+        [Test]
         public void GivenDistanceAndTimeShouldReturnTotalFarePREMIUM()
         {
             invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);

@@ -32,6 +32,15 @@ namespace CabInvoiceGeneratorTest
             Assert.AreEqual(expectedSummary.GetType(), summary.GetType());
         }
         [Test]
+        public void GivenMultipleRideShouldReturnInvoiceSummary_TotalNoOfRides_TotalFare_AverageFare()
+        {
+            invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            Ride[] rides = { new Ride(2.0, 5), new Ride(4.0, 5), new Ride(3.0,7) }; 
+            InvoiceSummary summary = invoiceGenerator.CalculateFare(rides);
+            double[] expected = {3.0,107.0, 35.666666666666664d };
+            Assert.AreEqual(expected, summary.GetData());
+        }
+        [Test]
         public void GivenDistanceAndTimeShouldReturnTotalFarePREMIUM()
         {
             invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);
